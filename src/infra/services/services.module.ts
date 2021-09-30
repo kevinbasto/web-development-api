@@ -7,6 +7,13 @@ import { TokenGeneratorService } from './token-generator/token-generator.service
 import { TranstalerService } from './transtaler/transtaler.service';
 
 @Module({
-  providers: [CredentialHandlerService, EmailSenderService, PasswordCypherService, SessionHandlerService, TokenGeneratorService, TranstalerService]
+  providers: [
+    CredentialHandlerService,
+    EmailSenderService,
+    PasswordCypherService,
+    SessionHandlerService,
+    TokenGeneratorService,
+    TranstalerService
+  ]
 })
 export class ServicesModule {}
