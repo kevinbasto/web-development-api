@@ -1,1 +1,3 @@
-export interface CredentialsHandler {}
+export interface CredentialsHandler {
+    loadCredential(credential : string);
+}
