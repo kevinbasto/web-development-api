@@ -9,11 +9,11 @@ export class DatabaseConnection {
         this.loadCredentials();
     }
 
-    private scheme : string;
-    private host : string;
-    private port : string;
-    private user : string;
-    private password : string;
+    private scheme      : string;
+    private host        : string;
+    private port        : string;
+    private user        : string;
+    private password    : string;
 
     private loadCredentials(){
         this.scheme = this.credentialsHandler.loadCredential("scheme");
