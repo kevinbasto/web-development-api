@@ -15,6 +15,8 @@ import { UsersRepoService } from './users-repo/users-repo.service';
       useClass: UsersRepoService
     }
   ],
-  imports : [ServicesModule]
+  imports : [
+    ServicesModule
+  ]
 })
 export class ReposModule {}

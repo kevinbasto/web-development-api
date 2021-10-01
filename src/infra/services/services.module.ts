@@ -33,6 +33,32 @@ import { TranslaterService } from './transtaler/transtaler.service';
       provide: TRANSLATER,
       useClass: TranslaterService
     }
+  ],
+  exports: [
+    {
+      provide: CREDENTIALS_HANDLER,
+      useClass: CredentialHandlerService
+    },
+    {
+      provide: EMAIL_SENDER,
+      useClass: EmailSenderService
+    },
+    {
+      provide: PASSWORD_CYPHER,
+      useClass: PasswordCypherService
+    },
+    {
+      provide: SESSION_HANDLER,
+      useClass: SessionHandlerService
+    },
+    {
+      provide: TOKEN_GENERATOR,
+      useClass: TokenGeneratorService
+    },
+    {
+      provide: TRANSLATER,
+      useClass: TranslaterService
+    }
   ]
 })
 export class ServicesModule {}
