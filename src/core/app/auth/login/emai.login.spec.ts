@@ -1,7 +1,7 @@
-import { Login } from './email.login';
+import { EmailLogin } from './email.login';
 
 describe('Login', () => {
   it('should be defined', () => {
-    expect(new Login()).toBeDefined();
+    expect(new EmailLogin()).toBeDefined();
   });
 });
