@@ -7,12 +7,9 @@ import { DatabaseConnection } from '../databaseConnection';
 @Injectable()
 export class UsersRepoService implements UsersRepo {
 
+
     constructor(
         @Inject(CREDENTIALS_HANDLER) private credentialsHandler : CredentialsHandler
-    ){}
+    ){ }
 
-    create() {}
-    read() {}
-    update() {}
-    delete() {}
 }
