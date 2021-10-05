@@ -1,6 +1,7 @@
 import { EmailLoginDto } from "../../../dto/auth/email-login-dto";
 import { SessionDto } from "../../../dto/auth/session-dto";
 import { AccountUnverifiedException } from "../../../exceptions/account-unverified.exception";
+import { DatabaseException } from "../../../exceptions/database.exception";
 import { Exception } from "../../../exceptions/exception.interface";
 import { PasswordMismatchException } from "../../../exceptions/password-mismatch";
 import { UserNotFoundException } from "../../../exceptions/user-not-found";
@@ -31,10 +32,16 @@ export class EmailLogin {
     }
 
     private async validateData(loginData: EmailLoginDto, lang : string ) {
-        let account : any = await this.accountsRepo.getAccountByEmail(loginData.email);
+        let account : any = await this.accountsRepo.getAccountByEmail(loginData.email).catch(async() => { throw await this.getInternatServerErrorException(lang) });
         await this.checkIfUserExists(account, lang).catch( (exception : Exception) => {  throw exception.getException()});
         await this.checkPasswords(loginData.password, account.password, lang).catch( (exception : Exception) => { throw exception.getException()});
         await this.checkVerification(account, lang).catch( (exception : Exception) => { throw exception.getException()});
+    }
+
+    private async getInternatServerErrorException(lang : string){
+        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.DATABASE_ERROR_NAME}`)
+        let message = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.DATABASE_ERROR_MESSAGE}`)
+        return new DatabaseException(name, message).getException();
     }
 
     private async checkIfUserExists(account, lang : string){

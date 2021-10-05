@@ -81,4 +81,4 @@ import * as path from 'path';
     }
   ]
 })
-export class ServicesModule {}
+export class ToolsModule {}

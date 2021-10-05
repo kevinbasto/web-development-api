@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ServicesModule } from '../services/services.module';
+import { ToolsModule } from '../services/tools.module';
 import { AccountsRepoService } from './accounts-repo/accounts-repo.service';
 import { ACCOUNTS_REPO, USERS_REPO } from './repos.tokens';
 import { UsersRepoService } from './users-repo/users-repo.service';
 
 @Module({
   imports : [
-    ServicesModule
+    ToolsModule
   ],
   providers: [
     {
