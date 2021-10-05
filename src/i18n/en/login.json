@@ -1,0 +1,4 @@
+{
+    "error_name" : "server unable to generate session",
+    "error_message" : "the server cannot log you in"
+}

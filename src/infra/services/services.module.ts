@@ -9,7 +9,8 @@ import { SessionHandlerService } from './session-handler/session-handler.service
 import { TokenGeneratorService } from './token-generator/token-generator.service';
 import { TranslaterService } from './transtaler/transtaler.service';
 import { jwtSecret } from './session-handler/jwtSecret';
-
+import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
+import * as path from 'path';
 
 @Module({
   imports:[
@@ -17,7 +18,15 @@ import { jwtSecret } from './session-handler/jwtSecret';
     JwtModule.register({
       secret : jwtSecret,
       signOptions: { expiresIn: '60m' }
-    })
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      parser: I18nJsonParser,
+      parserOptions: {
+          path: path.join(__dirname, '../../i18n/'),
+          watch: true
+      },
+  }),
   ],
   providers: [
     {
