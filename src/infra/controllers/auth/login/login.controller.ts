@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Headers, Post } from '@nestjs/common';
 import { EmailLoginDto } from '../../../../core/dto/auth/email-login-dto';
 import { LoginService } from './login.service';
 
@@ -10,9 +10,9 @@ export class LoginController {
     ){}
 
     @Post('')
-    emailLogin(@Body() loginData : EmailLoginDto) : Promise<any>{
+    emailLogin(@Body() loginData : EmailLoginDto, @Headers('Accept-Language') lang : string) : Promise<any>{
         return new Promise<any>((resolve, reject) => {
-            this.loginService.loginWithEmailAndPassword(loginData)
+            this.loginService.loginWithEmailAndPassword(loginData, lang)
             .then(res => resolve(res))
             .catch(error => reject(error));
         });
