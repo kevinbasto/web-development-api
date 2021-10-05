@@ -1,4 +1,7 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ServicesModule } from '../services.module';
+import { jwtSecret } from './jwtSecret';
 import { SessionHandlerService } from './session-handler.service';
 
 describe('SessionHandlerService', () => {
@@ -7,6 +10,10 @@ describe('SessionHandlerService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [SessionHandlerService],
+      imports : [JwtModule.register({
+        secret : jwtSecret,
+        signOptions: { expiresIn: '60m' }
+      }),]
     }).compile();
 
     service = module.get<SessionHandlerService>(SessionHandlerService);

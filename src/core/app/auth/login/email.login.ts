@@ -8,6 +8,7 @@ import { PasswordCypher } from "../../../ports/password-cypher.interface";
 import { SessionHandler } from "../../../ports/session-handler.interface";
 import { Translater } from "../../../ports/translater.interface";
 import { AccountsRepo } from "../../../repos/accounts.repo.interface";
+import { EmailLoginMessages } from "./email.login.messages";
 
 export class EmailLogin {
 
@@ -21,34 +22,39 @@ export class EmailLogin {
     /**
      * checks credentials then generates a session
      * @async
-     * @method
      * @param {EmailLoginDto} loginData
      * @param {String} lang 
      */
     async login(loginData : EmailLoginDto, lang : string) : Promise<SessionDto> {
-        this.validateData(loginData, lang).catch(err => {throw err});
+        await this.validateData(loginData, lang).catch(err => {throw err});
         return this.sessionHandler.signSession( { email : loginData.email } );
     }
 
     private async validateData(loginData: EmailLoginDto, lang : string ) {
-        let account : any = this.accountsRepo.getAccountByEmail(loginData.email);
-        await this.checkIfUserExists(account).catch( (exception : Exception) => { throw exception.getException()});
-        await this.checkPasswords(loginData.password, account.password).catch( (exception : Exception) => { throw exception.getException()});
-        await this.checkVerification(account).catch( (exception : Exception) => { throw exception.getException()});
+        let account : any = await this.accountsRepo.getAccountByEmail(loginData.email);
+        await this.checkIfUserExists(account, lang).catch( (exception : Exception) => {  throw exception.getException()});
+        await this.checkPasswords(loginData.password, account.password, lang).catch( (exception : Exception) => { throw exception.getException()});
+        await this.checkVerification(account, lang).catch( (exception : Exception) => { throw exception.getException()});
     }
 
-    private async checkIfUserExists(account){
-        if(account)
-            throw new UserNotFoundException("", "");
+    private async checkIfUserExists(account, lang : string){
+        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.NOT_FOUND_NAME}`);
+        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.NOT_FOUND_MESSAGE}`);
+        if(!account)
+            throw new UserNotFoundException(name, message);
     }
 
-    private async checkPasswords(password : string, hashedPassword : string){
-        if(this.passwordCypher.verifyPassword(password, hashedPassword))
-            throw new PasswordMismatchException("", "");
+    private async checkPasswords(password : string, hashedPassword : string, lang : string){
+        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.PASSWORD_MISSMATCH_NAME}`);
+        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.PASSWORD_MISSMATCH_MESSAGE}`);
+        if(!this.passwordCypher.verifyPassword(password, hashedPassword))
+            throw new PasswordMismatchException(name, message);
     }
 
-    private async checkVerification(account : any){
+    private async checkVerification(account : any, lang : string){
+        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.UNVERIFIED_NAME}`);
+        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.UNVERIFIED_MESSAGE}`);
         if(!account.verified)
-            throw new AccountUnverifiedException("", "");
+            throw new AccountUnverifiedException(name, message);
     }
 }

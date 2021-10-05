@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "assets": ["i18n/**/*"],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
