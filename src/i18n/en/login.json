@@ -1,0 +1,10 @@
+{
+    "not_found_name" : "User not found",
+    "not_found_message" : "the email is not linked to any account",
+    "password_missmatch_name" : "password incorrect",
+    "password_missmatch_message" : "your password is incorrect",
+    "unverified_name" : "unverified",
+    "unverified_message" : "your accounts is unverified, please check your email and try again",
+    "database_error_name" : "internal error",
+    "database_error_message" : "there was a problem logging you in the system"
+}

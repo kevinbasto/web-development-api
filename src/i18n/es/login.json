@@ -1,0 +1,10 @@
+{
+    "not_found_name" : "Usuario no encontrado",
+    "not_found_message" : "el correo electrónico no está asociado a ningúna cuenta",
+    "password_missmatch_name" : "Contraseña incorrecta",
+    "password_missmatch_message" : "la contraseña provista es incorrecta",
+    "unverified_name" : "Cuenta no verificada",
+    "unverified_message" : "tu cuenta no está activada, revisa tu correo y activa tu cuenta para acceder",
+    "database_error_name" : "Problema interno",
+    "database_error_message" : "hubo un problema en el servidor al iniciar tu sesión"
+}
