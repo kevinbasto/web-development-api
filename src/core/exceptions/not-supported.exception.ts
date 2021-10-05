@@ -1,5 +1,5 @@
 import { UnauthorizedException } from "@nestjs/common";
-import { Exception } from "../ports/exception.port.interface";
+import { Exception } from "./exception.interface";
 
 export class NotSupportedException extends Error implements Exception{
 
