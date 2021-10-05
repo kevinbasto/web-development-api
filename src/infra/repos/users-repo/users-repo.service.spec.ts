@@ -17,4 +17,13 @@ describe('UsersRepoService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should create a user', () => {
+    try{
+      service.createUser("testfate")
+    }catch(exception){
+      console.log(exception);
+      expect(exception).toBeUndefined();
+    }
+  });
 });

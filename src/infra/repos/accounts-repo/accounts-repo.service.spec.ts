@@ -17,4 +17,15 @@ describe('AccountsRepoService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should create a test account', async () => {
+    try{
+      let email    : string = "testfate@test.com";
+      let password : string = "pasword test for the love";
+      service.createEmailAccount(email, password)
+    }catch(exception){
+      console.log(exception);
+      expect(exception).toBeUndefined();
+    }
+  })
 });
