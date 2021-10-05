@@ -29,6 +29,7 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "neo4j-driver": "^4.3.3",
+    "nestjs-i18n": "^8.1.6",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
