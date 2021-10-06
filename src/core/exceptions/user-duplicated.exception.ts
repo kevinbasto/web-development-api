@@ -4,6 +4,8 @@ import { Exception } from "./exception.interface";
 export class UserDuplicatedException extends Error implements Exception{
     constructor( name : string, message : string ) {
         super();
+        this.name = name;
+        this.message = message;
     }
 
     getException() {

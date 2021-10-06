@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EmailRegister } from '../../../../core/app/auth/register/email.register';
 import { EmailRegisterDto } from '../../../../core/dto/auth/email-register-dto';
 import { SystemMessageDto } from '../../../../core/dto/system-message.dto';
+import { CredentialsHandler } from '../../../../core/ports/credentials-handler.interface';
 import { EmailSender } from '../../../../core/ports/email-sender.interface';
 import { PasswordCypher } from '../../../../core/ports/password-cypher.interface';
 import { TemplateLoader } from '../../../../core/ports/template-loader.interface';
@@ -10,7 +11,7 @@ import { Translater } from '../../../../core/ports/translater.interface';
 import { AccountsRepo } from '../../../../core/repos/accounts.repo.interface';
 import { UsersRepo } from '../../../../core/repos/users.repo.interface';
 import { ACCOUNTS_REPO, USERS_REPO } from '../../../repos/repos.tokens';
-import { EMAIL_SENDER, PASSWORD_CYPHER, TEMPLATE_LOADER, TOKEN_GENERATOR, TRANSLATER } from '../../../tools/services.token';
+import { CREDENTIALS_HANDLER, EMAIL_SENDER, PASSWORD_CYPHER, TEMPLATE_LOADER, TOKEN_GENERATOR, TRANSLATER } from '../../../tools/services.token';
 
 @Injectable()
 export class RegisterService {
@@ -21,7 +22,8 @@ export class RegisterService {
         @Inject(TRANSLATER) private translater : Translater,
         @Inject(PASSWORD_CYPHER) private passwordCypher : PasswordCypher,
         @Inject(TEMPLATE_LOADER) private templateLoader : TemplateLoader,
-        @Inject(EMAIL_SENDER) private emailSender : EmailSender
+        @Inject(EMAIL_SENDER) private emailSender : EmailSender,
+        @Inject(CREDENTIALS_HANDLER) private credentialsHandler : CredentialsHandler
     ) {}
     
     registerWithEmailAndPassword(registerData : EmailRegisterDto, lang : string) : Promise<SystemMessageDto>{
@@ -40,7 +42,8 @@ export class RegisterService {
             this.translater, 
             this.passwordCypher,
             this.templateLoader,
-            this.emailSender
+            this.emailSender,
+            this.credentialsHandler
         );
     }
 }

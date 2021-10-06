@@ -1,0 +1,8 @@
+{
+    "account_duplicated_name" : "User duplicated",
+    "account_duplicated_message" : "the email is already registered",
+    "database_exception_name" : "internal error",
+    "database_exception_message" : "there was a problem registering your account",
+    "register_success_name" : "register complete",
+    "register_success_message" : "your account has been created and we sent your an activation email"
+}

@@ -39,28 +39,28 @@ export class EmailLogin {
     }
 
     private async getInternatServerErrorException(lang : string){
-        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.DATABASE_ERROR_NAME}`)
-        let message = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.DATABASE_ERROR_MESSAGE}`)
+        let name = await this.translater.getTranslation(lang, EmailLoginMessages.DATABASE_ERROR_NAME)
+        let message = await this.translater.getTranslation(lang, EmailLoginMessages.DATABASE_ERROR_MESSAGE)
         return new DatabaseException(name, message).getException();
     }
 
     private async checkIfUserExists(account, lang : string){
-        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.NOT_FOUND_NAME}`);
-        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.NOT_FOUND_MESSAGE}`);
+        let name = await this.translater.getTranslation(lang, EmailLoginMessages.NOT_FOUND_NAME);
+        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.NOT_FOUND_MESSAGE);
         if(!account)
             throw new UserNotFoundException(name, message);
     }
 
     private async checkPasswords(password : string, hashedPassword : string, lang : string){
-        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.PASSWORD_MISSMATCH_NAME}`);
-        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.PASSWORD_MISSMATCH_MESSAGE}`);
+        let name = await this.translater.getTranslation(lang, EmailLoginMessages.PASSWORD_MISSMATCH_NAME);
+        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.PASSWORD_MISSMATCH_MESSAGE);
         if(!this.passwordCypher.verifyPassword(password, hashedPassword))
             throw new PasswordMismatchException(name, message);
     }
 
     private async checkVerification(account : any, lang : string){
-        let name = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.UNVERIFIED_NAME}`);
-        let message  = await this.translater.getTranslation(lang, `login.${EmailLoginMessages.UNVERIFIED_MESSAGE}`);
+        let name = await this.translater.getTranslation(lang, EmailLoginMessages.UNVERIFIED_NAME);
+        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.UNVERIFIED_MESSAGE);
         if(!account.verified)
             throw new AccountUnverifiedException(name, message);
     }
