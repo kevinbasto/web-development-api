@@ -1,1 +1,3 @@
-export interface TokenGenerator {}
+export interface TokenGenerator {
+    generateToken() : string;
+}

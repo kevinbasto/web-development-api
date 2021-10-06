@@ -6,7 +6,7 @@ import { SessionHandler } from '../../../../core/ports/session-handler.interface
 import { Translater } from '../../../../core/ports/translater.interface';
 import { AccountsRepo } from '../../../../core/repos/accounts.repo.interface';
 import { ACCOUNTS_REPO } from '../../../repos/repos.tokens';
-import { PASSWORD_CYPHER, SESSION_HANDLER, TRANSLATER } from '../../../services/services.token';
+import { PASSWORD_CYPHER, SESSION_HANDLER, TRANSLATER } from '../../../tools/services.token';
 
 @Injectable()
 export class LoginService {

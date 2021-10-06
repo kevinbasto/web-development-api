@@ -1,0 +1,8 @@
+{
+    "account_duplicated_name" : "Usuario duplicado",
+    "account_duplicated_message" : "El correo introducido ya está registrado",
+    "database_exception_name" : "Error de registro",
+    "database_exception_message" : "Hubo un problema al registrar al usuario, favor de intentar más tarde",
+    "register_success_name" : "Usuario registrado",
+    "register_success_message" : "El usuario ha sido registrado con éxito, revisa tu correo para activar tu cuenta"
+}

@@ -1,7 +1,7 @@
-import { Register } from './email.register';
+import { EmailRegister } from './email.register';
 
 describe('Register', () => {
   it('should be defined', () => {
-    expect(new Register()).toBeDefined();
+    expect(new EmailRegister()).toBeDefined();
   });
 });

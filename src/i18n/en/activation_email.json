@@ -1,0 +1,4 @@
+{
+    "activation_email_subject" : "Activate your account",
+    "activation_email_content" : "this account should be activated in order to access all the functions of the app, this is a development test email, IT IS NOT SPAM"
+}

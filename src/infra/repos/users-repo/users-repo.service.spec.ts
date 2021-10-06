@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ServicesModule } from '../../services/services.module';
+import { ToolsModule } from '../../tools/tools.module';
 import { UsersRepoService } from './users-repo.service';
 
 describe('UsersRepoService', () => {
@@ -8,7 +8,7 @@ describe('UsersRepoService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [UsersRepoService],
-      imports: [ServicesModule]
+      imports: [ToolsModule]
     }).compile();
 
     service = module.get<UsersRepoService>(UsersRepoService);
@@ -20,7 +20,7 @@ describe('UsersRepoService', () => {
 
   it('should create a user', () => {
     try{
-      service.createUser("testfate")
+      service.createUserWithEmailAccount("testfate")
     }catch(exception){
       console.log(exception);
       expect(exception).toBeUndefined();

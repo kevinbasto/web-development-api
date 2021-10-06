@@ -1,6 +1,6 @@
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ServicesModule } from '../services.module';
+import { ToolsModule } from '../tools.module';
 import { jwtSecret } from './jwtSecret';
 import { SessionHandlerService } from './session-handler.service';
 

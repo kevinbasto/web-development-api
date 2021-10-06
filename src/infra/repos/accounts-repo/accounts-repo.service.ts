@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { QueryResult, Session } from 'neo4j-driver-core';
 import { CredentialsHandler } from '../../../core/ports/credentials-handler.interface';
 import { AccountsRepo } from '../../../core/repos/accounts.repo.interface';
-import { CREDENTIALS_HANDLER } from '../../services/services.token';
+import { CREDENTIALS_HANDLER } from '../../tools/services.token';
 import { DatabaseConnection } from '../databaseConnection';
 
 
@@ -13,10 +13,10 @@ export class AccountsRepoService implements AccountsRepo{
         @Inject(CREDENTIALS_HANDLER) private credentialsHandler : CredentialsHandler
     ) {}
 
-    async createEmailAccount(email : string, password: string) : Promise<any> {
+    async createEmailAccount(email : string, password: string, token : string) : Promise<any> {
         const session : Session = await this.dbConnection.openWriteSession();
-        let query : string = "CREATE(account:account { email : $email, password : $password })";
-        let params = { email : email, password: password};
+        let query : string = "CREATE(account:account { email : $email, password : $password, activationToken : $token })";
+        let params = { email : email, password: password, token : token};
         await session.run(query, params);
         await session.close();
     }
