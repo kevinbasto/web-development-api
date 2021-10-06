@@ -12,10 +12,10 @@ export class UsersRepoService implements UsersRepo {
         @Inject(CREDENTIALS_HANDLER) private credentialsHandler : CredentialsHandler
     ){ }
 
-    async createUserWithEmailAccount(username : string){
+    async createUserWithEmailAccount(username : string, email : string){
         const session : Session = await this.dbConnector.openWriteSession();
-        let query = "CREATE(user:user) set user.name = $name";
-        let params = { name : username };
+        let query = "MATCH(account:account { email : $email }) CREATE(account)-[:belongs_to]->(user:user {name: $name});";
+        let params = { name : username, email : email };
         await session.run(query, params);
         await session.close();
     }

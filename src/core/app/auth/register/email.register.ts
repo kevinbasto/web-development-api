@@ -14,6 +14,7 @@ import { UsersRepo } from "../../../repos/users.repo.interface";
 import { EmailRegisterMessage } from "./email.register.messages";
 import { SendVerificationEmail } from "./verification-email/send-verification-email";
 
+
 export class EmailRegister {
     constructor(
         private accountsRepo : AccountsRepo,

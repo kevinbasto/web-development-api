@@ -15,7 +15,7 @@ export class AccountsRepoService implements AccountsRepo{
 
     async createEmailAccount(email : string, password: string, token : string) : Promise<any> {
         const session : Session = await this.dbConnection.openWriteSession();
-        let query : string = "CREATE(account:account { email : $email, password : $password, activationToken : $token })";
+        let query : string = "CREATE(account:account { email : $email, password : $password, activationToken : $token, verified : false})";
         let params = { email : email, password: password, token : token};
         await session.run(query, params);
         await session.close();
