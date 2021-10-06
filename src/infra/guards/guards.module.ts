@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ToolsModule } from '../services/tools.module';
+import { ToolsModule } from '../tools/tools.module';
 
 @Module({
   providers: [],

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ReposModule } from '../../../repos/repos.module';
-import { ToolsModule } from '../../../services/tools.module';
+import { ToolsModule } from '../../../tools/tools.module';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 

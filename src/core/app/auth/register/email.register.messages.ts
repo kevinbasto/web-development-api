@@ -1,0 +1,6 @@
+export enum EmailRegisterMessage{
+    ACCOUNT_DUPLICATED_NAME = "",
+    ACCOUNT_DUPLICATED_MESSAGE = "",
+    DATABASE_EXCEPTION_NAME = "",
+    DATABASE_EXCEPTION_MESSAGE = ""    
+}

@@ -4,12 +4,13 @@ import { PassportModule } from '@nestjs/passport';
 import { CredentialHandlerService } from './credential-handler/credential-handler.service';
 import { EmailSenderService } from './email-sender/email-sender.service';
 import { PasswordCypherService } from './password-cypher/password-cypher.service';
-import { CREDENTIALS_HANDLER, EMAIL_SENDER, PASSWORD_CYPHER, SESSION_HANDLER, TOKEN_GENERATOR, TRANSLATER } from './services.token';
+import { CREDENTIALS_HANDLER, EMAIL_SENDER, PASSWORD_CYPHER, SESSION_HANDLER, TEMPLATE_LOADER, TOKEN_GENERATOR, TRANSLATER } from './services.token';
 import { SessionHandlerService } from './session-handler/session-handler.service';
 import { TokenGeneratorService } from './token-generator/token-generator.service';
 import { TranslaterService } from './transtaler/transtaler.service';
 import { jwtSecret } from './session-handler/jwtSecret';
 import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
+import { TemplateLoaderService } from './template-loader/template-loader.service';
 import * as path from 'path';
 
 @Module({
@@ -53,6 +54,10 @@ import * as path from 'path';
       provide: TRANSLATER,
       useClass: TranslaterService
     },
+    {
+      provide: TEMPLATE_LOADER,
+      useClass : TemplateLoaderService
+    }
   ],
   exports: [
     {
@@ -78,6 +83,10 @@ import * as path from 'path';
     {
       provide: TRANSLATER,
       useClass: TranslaterService
+    },
+    {
+      provide: TEMPLATE_LOADER,
+      useClass: TemplateLoaderService
     }
   ]
 })

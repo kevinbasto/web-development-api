@@ -1,3 +1,3 @@
 export interface UsersRepo {
-    createUser(name : string) : Promise<any>;
+    createUserWithEmailAccount(name : string, email : string) : Promise<any>;
 }

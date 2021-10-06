@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ToolsModule } from '../../services/tools.module';
+import { ToolsModule } from '../../tools/tools.module';
 import { AccountsRepoService } from './accounts-repo.service';
 
 describe('AccountsRepoService', () => {
