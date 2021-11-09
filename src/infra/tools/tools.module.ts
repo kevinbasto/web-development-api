@@ -13,6 +13,37 @@ import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import { TemplateLoaderService } from './template-loader/template-loader.service';
 import * as path from 'path';
 
+const services = [
+  {
+    provide: CREDENTIALS_HANDLER,
+    useClass: CredentialHandlerService
+  },
+  {
+    provide: EMAIL_SENDER,
+    useClass: EmailSenderService
+  },
+  {
+    provide: PASSWORD_CYPHER,
+    useClass: PasswordCypherService
+  },
+  {
+    provide: SESSION_HANDLER,
+    useClass: SessionHandlerService
+  },
+  {
+    provide: TOKEN_GENERATOR,
+    useClass: TokenGeneratorService
+  },
+  {
+    provide: TRANSLATER,
+    useClass: TranslaterService
+  },
+  {
+    provide: TEMPLATE_LOADER,
+    useClass : TemplateLoaderService
+  }
+]
+
 @Module({
   imports:[
     PassportModule,
@@ -24,70 +55,12 @@ import * as path from 'path';
       fallbackLanguage: 'en',
       parser: I18nJsonParser,
       parserOptions: {
-          path: path.join(__dirname, '../../i18n/'),
+          path: path.join(__dirname, '../../assets/i18n/'),
           watch: true
       },
   }),
   ],
-  providers: [
-    {
-      provide: CREDENTIALS_HANDLER,
-      useClass: CredentialHandlerService
-    },
-    {
-      provide: EMAIL_SENDER,
-      useClass: EmailSenderService
-    },
-    {
-      provide: PASSWORD_CYPHER,
-      useClass: PasswordCypherService
-    },
-    {
-      provide: SESSION_HANDLER,
-      useClass: SessionHandlerService
-    },
-    {
-      provide: TOKEN_GENERATOR,
-      useClass: TokenGeneratorService
-    },
-    {
-      provide: TRANSLATER,
-      useClass: TranslaterService
-    },
-    {
-      provide: TEMPLATE_LOADER,
-      useClass : TemplateLoaderService
-    }
-  ],
-  exports: [
-    {
-      provide: CREDENTIALS_HANDLER,
-      useClass: CredentialHandlerService
-    },
-    {
-      provide: EMAIL_SENDER,
-      useClass: EmailSenderService
-    },
-    {
-      provide: PASSWORD_CYPHER,
-      useClass: PasswordCypherService
-    },
-    {
-      provide: SESSION_HANDLER,
-      useClass: SessionHandlerService
-    },
-    {
-      provide: TOKEN_GENERATOR,
-      useClass: TokenGeneratorService
-    },
-    {
-      provide: TRANSLATER,
-      useClass: TranslaterService
-    },
-    {
-      provide: TEMPLATE_LOADER,
-      useClass: TemplateLoaderService
-    }
-  ]
+  providers: services,
+  exports: services
 })
 export class ToolsModule {}
