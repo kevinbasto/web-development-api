@@ -1,3 +1,3 @@
 export interface CreateUserRepo{
-    createUser(user : any, accountId : string) : Promise<void>;
+    createUser(lang : string, user : any, accountId : string) : Promise<void>;
 }
