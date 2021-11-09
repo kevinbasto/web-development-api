@@ -1,14 +1,13 @@
 import { EmailDto } from "../../../dto/generic/email-dto";
-import { SystemMessage } from "../../../dto/generic/system-message.dto";
 import { CredentialsHandler } from "../../../ports/credentials-handler.interface";
 import { EmailSender } from "../../../ports/email-sender.interface";
 import { TemplateLoader } from "../../../ports/template-loader.interface";
 
 export class EmailSend {
     constructor(
-        private templateManager : TemplateLoader,
-        private credentialsManager : CredentialsHandler,
-        private emailSender : EmailSender
+        protected templateManager : TemplateLoader,
+        protected credentialsManager : CredentialsHandler,
+        protected emailSender : EmailSender
     ){}
 
     async sendEmail(destiny : string, template : string, subject : string, params : any) : Promise<void>{
