@@ -35,8 +35,14 @@ export class RegisterService {
     ) {}
 
     registerWithEmailAndPassword(registerData : EmailRegisterDto, lang : string) : Promise<SystemMessage>{
-        return new Promise<any>((resolve, reject) => {
-            this.emailRegister.registerEmailAccount(lang, registerData)
+        return new Promise<any>(async(resolve, reject) => {
+            try {
+                let verificationToken : string = await this.emailRegister.registerEmailAccount(lang, registerData);
+                let success : SystemMessage = await this.sendVerificationEmail.sendVerificationEmail(lang, registerData.email, verificationToken);
+                resolve(success);
+            } catch (error) {
+                reject(error);
+            }
         });
     }
 
