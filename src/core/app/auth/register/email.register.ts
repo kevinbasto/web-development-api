@@ -82,6 +82,7 @@ export class EmailRegister {
     private createUser(registerData : EmailRegisterDto) : User{
         let user : User = {
             name: registerData.username,
+            userId : ""
         }
         user.userId = this.uuidGenerator.GenerateUuid(JSON.stringify(user));
         return user;
