@@ -3,6 +3,6 @@ import { CreateEmailAccountRepo } from "../../../core/repos/accounts/create-emai
 
 export class MockCreateEmailAccount implements CreateEmailAccountRepo{
     createEmailAccount(lang : string, account : EmailAccount) : Promise<void>{
-        return;
+        return new Promise((resolve, reject) => resolve());
     }
 }

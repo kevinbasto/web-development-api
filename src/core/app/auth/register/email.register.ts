@@ -43,7 +43,7 @@ export class EmailRegister {
     }
 
     private async checkIfEmailAccountIsNotDuplicated(email : string) : Promise<boolean>{
-        let account = this.FetchEmailAccountRepo.fetchAccountByEmail(this.lang, email);
+        let account : EmailAccount = await this.FetchEmailAccountRepo.fetchAccountByEmail(this.lang, email);
         if(!account)
             return true;
         else
@@ -59,10 +59,10 @@ export class EmailRegister {
         let encrypterPassword : string;
         try {
             encrypterPassword = await this.passwordCypher.signPassword(password);
+            return encrypterPassword;
         } catch (error) {
             throw error;
         }
-        return encrypterPassword;
     }
 
     private createAccount(registerData : EmailRegisterDto) : EmailAccount{

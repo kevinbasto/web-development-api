@@ -3,6 +3,6 @@ import { CreateUserRepo } from "../../../core/repos/users/create-user.interface"
 
 export class MockCreateUser implements CreateUserRepo{
     createUser(lang : string, user : User, accountId : string) : Promise<void>{
-        return;
+        return new Promise((resolve, reject) => resolve());
     }
 }

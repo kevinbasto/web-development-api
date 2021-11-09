@@ -27,12 +27,12 @@ describe('CreateAccountService', () => {
     expect(CreateAccountRepoService).toBeDefined();
   });
 
-  it('should create an account', async() => {
+  /*it('should create an account', async() => {
     try {
       await CreateAccountRepoService.createEmailAccount(lang, account);
     } catch (error) {
       console.log(error);
       expect(error).toBeUndefined();
     }
-  })
+  })*/
 });

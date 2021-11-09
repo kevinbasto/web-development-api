@@ -9,7 +9,7 @@ export class PasswordCypherService implements PasswordCypher {
 
     async signPassword(password: string) : Promise<string> {
         try {
-            const saltRounds = 20;
+            const saltRounds = 10;
             let salt;
             await bcrypt.genSalt(saltRounds).then(genSalt => salt = genSalt);
             await bcrypt.hash(password, salt).then(hash => password = hash);
