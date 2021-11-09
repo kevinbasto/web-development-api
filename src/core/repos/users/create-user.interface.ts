@@ -1,3 +1,5 @@
+import { User } from "../../instances/auth/user";
+
 export interface CreateUserRepo{
-    createUser(lang : string, user : any, accountId : string) : Promise<void>;
+    createUser(lang : string, user : User, accountId : string) : Promise<void>;
 }
