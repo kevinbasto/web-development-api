@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EmailRegister } from '../../../../core/app/auth/register/email.register';
 import { EmailRegisterDto } from '../../../../core/dto/auth/email-register-dto';
-import { SystemMessageDto } from '../../../../core/dto/system-message.dto';
+import { SystemMessageDto } from '../../../../core/dto/generic/system-message.dto';
 
 
 @Injectable()

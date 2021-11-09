@@ -1,5 +1,5 @@
 import { NotFoundException } from "@nestjs/common";
-import { Exception } from "./exception.interface";
+import { Exception } from "../exception.interface";
 
 export class UserNotFoundException extends Error implements Exception{
 
