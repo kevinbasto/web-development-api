@@ -1,8 +1,8 @@
 import { UnauthorizedException } from "@nestjs/common";
-import { Exception } from "./exception.interface";
+import { Exception } from "../exception.interface";
 
-export class PasswordMismatchException extends Error implements Exception{
-    
+export class NotSupportedException extends Error implements Exception{
+
     constructor(name : string, message : string){
         super();
         this.name = name;
@@ -10,6 +10,6 @@ export class PasswordMismatchException extends Error implements Exception{
     }
 
     getException(){
-        throw new UnauthorizedException({ name : this.name, message : this.message});
+        return new UnauthorizedException({ name : this.name, message : this.message });
     }
 }

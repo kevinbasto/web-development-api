@@ -1,5 +1,5 @@
 import { InternalServerErrorException } from "@nestjs/common";
-import { Exception } from "./exception.interface";
+import { Exception } from "../exception.interface";
 
 export class DatabaseException extends Error implements Exception{
 
