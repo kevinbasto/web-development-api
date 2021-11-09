@@ -15,7 +15,9 @@ export class EmailSenderService implements EmailSender{
     async sendEmail(email : EmailDto) : Promise<any>{
         await sendgrid.setApiKey(this.apikey);
         await sendgrid.send(email)
-        .then(res => { })
+        .then(res => {
+            console.log(res);
+        })
         .catch(error => {
             throw error;
         })
