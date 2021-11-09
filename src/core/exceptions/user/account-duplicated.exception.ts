@@ -1,7 +1,7 @@
 import { UnauthorizedException } from "@nestjs/common";
 import { Exception } from "../exception.interface";
 
-export class UserDuplicatedException extends Error implements Exception{
+export class AccountDuplicatedException extends Error implements Exception{
     constructor( name : string, message : string ) {
         super();
         this.name = name;

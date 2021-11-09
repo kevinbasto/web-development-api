@@ -1,4 +1,4 @@
-export class SystemMessageDto {
+export class SystemMessage {
     name : string;
     message : string;
 }

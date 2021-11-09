@@ -1,6 +1,8 @@
 export class EmailAccount {
     email : string;
     password : string;
-    jobId : string;
+    accountId : string;
     verificationToken? : string;
+    isVerified? : boolean;
+    registerDate? : number;
 }
