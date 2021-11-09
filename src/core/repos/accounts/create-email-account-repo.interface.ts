@@ -1,3 +1,5 @@
+import { EmailAccount } from "../../instances/auth/email-account";
+
 export interface CreateEmailAccountRepo{
-    createEmailAccount(email : string, password : string, token : string) : Promise<void>;
+    createEmailAccount(lang : string, account : EmailAccount) : Promise<void>;
 }
