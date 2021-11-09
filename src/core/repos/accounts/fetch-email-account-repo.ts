@@ -1,3 +1,3 @@
 export interface FetchEmailAccountRepo{
-    FetchAccountByEmail(email : string) : Promise<any>;
+    fetchAccountByEmail(email : string) : Promise<any>;
 }
