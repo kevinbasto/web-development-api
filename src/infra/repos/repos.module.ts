@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ToolsModule } from '../tools/tools.module';
+import { AccountsModule } from './accounts/accounts.module';
 
 
 @Module({
   imports : [
-    ToolsModule
+    AccountsModule
   ],
-  providers: [],
-  exports : []
+  exports : [
+    AccountsModule
+  ]
 })
 export class ReposModule {}
