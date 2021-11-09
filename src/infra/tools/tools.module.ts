@@ -1,19 +1,20 @@
-import { Module } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { CredentialHandlerService } from './credential-handler/credential-handler.service';
 import { EmailSenderService } from './email-sender/email-sender.service';
 import { PasswordCypherService } from './password-cypher/password-cypher.service';
-import { CREDENTIALS_HANDLER, EMAIL_SENDER, PASSWORD_CYPHER, SESSION_HANDLER, TEMPLATE_LOADER, TOKEN_GENERATOR, TRANSLATER } from './services.token';
+import { CREDENTIALS_HANDLER, EMAIL_SENDER, PASSWORD_CYPHER, SESSION_HANDLER, TEMPLATE_LOADER, TOKEN_GENERATOR, TRANSLATER, UUID_GENERATOR } from './services.token';
 import { SessionHandlerService } from './session-handler/session-handler.service';
 import { TokenGeneratorService } from './token-generator/token-generator.service';
 import { TranslaterService } from './transtaler/transtaler.service';
 import { jwtSecret } from './session-handler/jwtSecret';
 import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import { TemplateLoaderService } from './template-loader/template-loader.service';
+import { UuidGeneratorService } from './uuid-generator/uuid-generator.service';
 import * as path from 'path';
 
-const services = [
+const services : Provider<any>[] = [
   {
     provide: CREDENTIALS_HANDLER,
     useClass: CredentialHandlerService
@@ -41,6 +42,10 @@ const services = [
   {
     provide: TEMPLATE_LOADER,
     useClass : TemplateLoaderService
+  },
+  {
+    provide: UUID_GENERATOR,
+    useClass : UuidGeneratorService
   }
 ]
 
