@@ -1,5 +1,4 @@
 import { EmailRegisterDto } from "../../../dto/auth/email-register-dto";
-import { SystemMessage } from "../../../dto/generic/system-message.dto";
 import { PasswordMismatchException } from "../../../exceptions/account/password-mismatch.exception";
 import { AccountDuplicatedException } from "../../../exceptions/user/account-duplicated.exception";
 import { EmailAccount } from "../../../instances/auth/email-account";
