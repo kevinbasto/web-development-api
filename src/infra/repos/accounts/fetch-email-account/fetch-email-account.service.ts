@@ -21,10 +21,23 @@ export class FetchEmailAccountService extends DatabaseConnection implements Fetc
         let params = { email : email };
         let account : any;
         try {
-            let result = await this.executeReadModeQuery(lang,query, params);
+            let result = await this.executeReadModeQuery(lang, query, params);
             account = result.records[0]? result.records[0].toObject().account.properties : null;
         } catch (error) {
             throw error
+        }
+        return account;
+    }
+
+    async fetchAccountByVerificationToken(lang: string, verificationToken : string) : Promise<EmailAccount> {
+        let account : EmailAccount
+        let query : string = "MATCH(account:account) WHERE account.verificationToken = $verificationToken RETURN account;";
+        let params = { verificationToken: verificationToken }
+        try {
+            let result = await this.executeReadModeQuery(lang, query, params);
+            account = result.records[0]? result.records[0].toObject().account.properties : null;
+        } catch (error) {
+            throw error;
         }
         return account;
     }
