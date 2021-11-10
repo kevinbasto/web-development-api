@@ -5,7 +5,7 @@ import { TokenGenerator } from "../../../ports/token-generator.interface";
 import { FetchEmailAccountRepo } from "../../../repos/accounts/fetch-email-account-repo.interface";
 import { UpdateEmailAccountRepo } from "../../../repos/accounts/update-email-account-repo.interface";
 
-export class Recover {
+export class EmailAccountRecover {
 
     private lang : string;
 

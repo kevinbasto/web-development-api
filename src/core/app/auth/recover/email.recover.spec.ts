@@ -2,13 +2,13 @@ import { TokenGeneratorService } from '../../../../infra/tools/token-generator/t
 import { MockFetchEmailAccount } from '../../../../testing/repos/accounts/mock-fetch-email-account';
 import { MockUpdateEmailAccount } from '../../../../testing/repos/accounts/mock-update-email-account';
 import { AccountNotFoundException } from '../../../exceptions/user/user-not-found.exception';
-import { Recover } from './email.recover';
+import { EmailAccountRecover } from './email.recover';
 
 const fetchEmailAccount = new MockFetchEmailAccount();
 const tokenGenerator = new TokenGeneratorService();
 const updateEmailAccount = new MockUpdateEmailAccount();
 
-const recover = new Recover(fetchEmailAccount, tokenGenerator, updateEmailAccount);
+const recover = new EmailAccountRecover(fetchEmailAccount, tokenGenerator, updateEmailAccount);
 
 describe('Recover', () => {
   it('should be defined', () => {
