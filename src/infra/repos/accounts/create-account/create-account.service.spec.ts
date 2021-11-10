@@ -31,7 +31,6 @@ describe('CreateAccountService', () => {
     try {
       await CreateAccountRepoService.createEmailAccount(lang, account);
     } catch (error) {
-      console.log(error);
       expect(error).toBeUndefined();
     }
   })*/

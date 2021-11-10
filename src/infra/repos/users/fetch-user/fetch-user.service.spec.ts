@@ -24,10 +24,8 @@ describe('FetchUserService', () => {
       let email : string = "test@test.com";
       let lang : string = "en";
       let user : User = await service.fetchUserWithEmail(lang, email);
-      console.log(user);
       expect(user).toBeDefined();
     } catch (error) {
-      console.log(error);
       expect(error).toBeUndefined();
     }
   })

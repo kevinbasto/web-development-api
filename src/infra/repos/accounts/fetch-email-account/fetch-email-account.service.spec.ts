@@ -26,7 +26,6 @@ describe('FetchEmailAccountService', () => {
       let account : EmailAccount = await service.fetchAccountByEmail(lang, email);
       expect(account).toBeDefined();
     } catch (error) {
-      console.log(error);
       expect(error).toBeUndefined();
     }
   })

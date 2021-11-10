@@ -33,7 +33,6 @@ describe('CreateUserRepoService', () => {
     try {
       await createUserRepoService.createUser(lang, newUser, accountId);
     } catch (error) {
-      console.log(error);
       expect(error).toBeUndefined();
     }
   })*/

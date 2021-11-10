@@ -35,7 +35,6 @@ describe('Register', () => {
     let lang : string =  "en";
     try {
       let accountId = await emailRegister.registerEmailAccount(lang, newRegisterData);
-      console.log(accountId);
       expect(accountId).toBeDefined();
     } catch (error) {
       expect(error).toBeUndefined();
