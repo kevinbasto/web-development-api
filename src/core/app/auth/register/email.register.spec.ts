@@ -3,7 +3,7 @@ import { TokenGeneratorService } from '../../../../infra/tools/token-generator/t
 import { UuidGeneratorService } from '../../../../infra/tools/uuid-generator/uuid-generator.service';
 import { MockCreateEmailAccount } from '../../../../testing/repos/accounts/mock-create-email-account';
 import { MockFetchEmailAccount } from '../../../../testing/repos/accounts/mock-fetch-email-account';
-import { MockCreateUser } from '../../../../testing/repos/users/mock-create-email-account';
+import { MockCreateUser } from '../../../../testing/repos/users/mock-create-user';
 import { EmailRegisterDto } from '../../../dto/auth/email-register-dto';
 import { PasswordMismatchException } from '../../../exceptions/account/password-mismatch.exception';
 import { AccountDuplicatedException } from '../../../exceptions/user/account-duplicated.exception';

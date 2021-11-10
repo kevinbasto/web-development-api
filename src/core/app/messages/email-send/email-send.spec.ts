@@ -16,7 +16,7 @@ describe('EmailSend', () => {
 
   it('should send the email', async() => {
     try {
-      let destiny  : string = "kevin.basto@mexcoders.com";
+      let destiny  : string = "test@test.com";
       let template : string = "test";
       let subject  : string = "test email";
       let params = { message : "this is a test email, for the sake of testing email" };
@@ -28,7 +28,7 @@ describe('EmailSend', () => {
 
   it('should reject the petition due to template not existing', async() => {
     try {
-      let destiny  : string = "kevin.basto@mexcoders.com";
+      let destiny  : string = "test@test.com";
       let template : string = "testNotExisting";
       let subject  : string = "test email";
       let params = { message : "this is a test email, for the sake of testing email" };
