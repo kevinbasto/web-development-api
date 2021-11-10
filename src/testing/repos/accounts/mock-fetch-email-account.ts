@@ -17,6 +17,14 @@ export class MockFetchEmailAccount implements FetchEmailAccountRepo{
             password: "$2b$10$IPYi9PiY2JfSpjQfwepY/.6AIqcHda/RTlO1NGpwWDerSiv8dwuna",
             isVerified: false,
             registerDate: 0
+        },
+        {
+            accountId: "95832d84599cb4fc72153b1514870dde91a66d2a409dedeb9600fc77bbe9f9fb61932b19314c2a24f3af0c5f857b32f79e1dafd07be9e8560663976a9a4cf859",
+            email : "testtobeverified@test.com",
+            password: "$2b$10$IPYi9PiY2JfSpjQfwepY/.6AIqcHda/RTlO1NGpwWDerSiv8dwuna",
+            isVerified: false,
+            verificationToken : "test",
+            registerDate: 0
         }
     ]
 
@@ -27,5 +35,11 @@ export class MockFetchEmailAccount implements FetchEmailAccountRepo{
                 fetchAccount = account;
         }
         return fetchAccount? fetchAccount : null;
+    }
+
+    async fetchAccountByVerificationToken(lang: string, verificationToken : string) : Promise<EmailAccount>{
+        for(let account of this.accounts)
+            if(account.verificationToken && account.verificationToken == verificationToken)
+                return account;
     }
 }
