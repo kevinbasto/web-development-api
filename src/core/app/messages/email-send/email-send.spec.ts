@@ -22,7 +22,6 @@ describe('EmailSend', () => {
       let params = { message : "this is a test email, for the sake of testing email" };
       await emailSend.sendEmail(destiny, template, subject, params);
     } catch (error) {
-      console.log(error);
       expect(error).toBeUndefined();
     }
   });
@@ -35,7 +34,6 @@ describe('EmailSend', () => {
       let params = { message : "this is a test email, for the sake of testing email" };
       await emailSend.sendEmail(destiny, template, subject, params);
     } catch (error) {
-      console.log(error);
       expect(error).toBeDefined();
     }
   });
