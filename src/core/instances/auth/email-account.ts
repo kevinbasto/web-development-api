@@ -5,4 +5,5 @@ export class EmailAccount {
     verificationToken? : string;
     isVerified? : boolean;
     registerDate? : number;
+    recoverToken? : string;
 }
