@@ -34,7 +34,7 @@ export class ChangePassword {
         });
     }
 
-    async fetchAccountByRecoverToken(token : string) : Promise<EmailAccount>{
+    private async fetchAccountByRecoverToken(token : string) : Promise<EmailAccount>{
         let account : EmailAccount;
         try {
             account = await this.fetchEmailAccountRepo.fetchAccountByRecoverToken(this.lang, token);
