@@ -41,4 +41,17 @@ export class FetchEmailAccountService extends DatabaseConnection implements Fetc
         }
         return account;
     }
+
+    async fetchAccountByRecoverToken(lang: string, recoverToken : string) : Promise<EmailAccount> {
+        let account : EmailAccount
+        let query : string = "MATCH(account:account) WHERE account.recoverToken = $recoverToken RETURN account;";
+        let params = { recoverToken: recoverToken }
+        try {
+            let result = await this.executeReadModeQuery(lang, query, params);
+            account = result.records[0]? result.records[0].toObject().account.properties : null;
+        } catch (error) {
+            throw error;
+        }
+        return account;
+    }
 }

@@ -39,5 +39,5 @@ describe('FetchEmailAccountService', () => {
     } catch (error) {
       expect(error).toBeUndefined();
     }
-  })
+  });
 });

@@ -9,6 +9,7 @@ export class MockFetchEmailAccount implements FetchEmailAccountRepo{
             email: "test2@test.com",
             password : "$2b$10$IPYi9PiY2JfSpjQfwepY/.6AIqcHda/RTlO1NGpwWDerSiv8dwuna",
             isVerified: true,
+            recoverToken : "test",
             registerDate: 0,
         },
         {
@@ -40,6 +41,12 @@ export class MockFetchEmailAccount implements FetchEmailAccountRepo{
     async fetchAccountByVerificationToken(lang: string, verificationToken : string) : Promise<EmailAccount>{
         for(let account of this.accounts)
             if(account.verificationToken && account.verificationToken == verificationToken)
+                return account;
+    }
+
+    async fetchAccountByRecoverToken(lang: string, recoverToken : string) : Promise<EmailAccount>{
+        for(let account of this.accounts)
+            if(account.recoverToken && account.recoverToken == recoverToken)
                 return account;
     }
 }
