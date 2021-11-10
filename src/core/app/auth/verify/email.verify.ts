@@ -5,7 +5,7 @@ import { Translater } from "../../../ports/translater.interface";
 import { FetchEmailAccountRepo } from "../../../repos/accounts/fetch-email-account-repo.interface";
 import { UpdateEmailAccountRepo } from "../../../repos/accounts/update-email-account-repo.interface";
 
-export class Verify {
+export class EmailVerify {
 
     private lang : string;
 

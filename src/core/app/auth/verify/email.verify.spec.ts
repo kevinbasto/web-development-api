@@ -2,14 +2,14 @@ import { MockFetchEmailAccount } from '../../../../testing/repos/accounts/mock-f
 import { MockUpdateEmailAccount } from '../../../../testing/repos/accounts/mock-update-email-account';
 import { MockTranslater } from '../../../../testing/tools/mock-translater';
 import { AccountNotFoundException } from '../../../exceptions/user/user-not-found.exception';
-import { Verify } from './email.verify';
+import { EmailVerify } from './email.verify';
 
 const fetchEmailAccount = new MockFetchEmailAccount();
 const translater = new MockTranslater();
 const updateEmailAccount = new MockUpdateEmailAccount();
 
 
-const verify = new Verify(fetchEmailAccount, translater, updateEmailAccount);
+const verify = new EmailVerify(fetchEmailAccount, translater, updateEmailAccount);
 
 describe('Verify', () => {
   it('should be defined', () => {

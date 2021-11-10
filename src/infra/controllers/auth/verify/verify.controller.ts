@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Header, Headers, Param, Post } from '@nestjs/common';
 import { VerifyService } from './verify.service';
 
 @Controller('verify')
@@ -8,10 +8,10 @@ export class VerifyController {
         private verifyService : VerifyService
     ){}
 
-    @Post('')
-    verifyEmailAccount() : Promise<any>{
+    @Post(':token')
+    verifyEmailAccount(@Param('token') token : string, @Headers('Accept-Language') lang : string) : Promise<any>{
         return new Promise<any>((resolve, reject) => {
-            this.verifyService.verifyEmailUser()
+            this.verifyService.verifyEmailUser(token ,lang)
             .then(res => resolve(res))
             .catch(error => reject(error));
         })
