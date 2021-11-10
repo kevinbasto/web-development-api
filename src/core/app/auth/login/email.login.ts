@@ -1,67 +1,70 @@
 import { EmailLoginDto } from "../../../dto/auth/email-login-dto";
 import { SessionDto } from "../../../dto/auth/session-dto";
-import { AccountUnverifiedException } from "../../../exceptions/account-unverified.exception";
-import { DatabaseException } from "../../../exceptions/database.exception";
-import { Exception } from "../../../exceptions/exception.interface";
-import { PasswordMismatchException } from "../../../exceptions/password-mismatch.exception";
-import { UserNotFoundException } from "../../../exceptions/user-not-found.exception";
+import { AccountUnverifiedException } from "../../../exceptions/account/account-unverified.exception";
+import { PasswordMismatchException } from "../../../exceptions/account/password-mismatch.exception";
+import { AccountNotFoundException } from "../../../exceptions/user/user-not-found.exception";
+import { EmailAccount } from "../../../instances/auth/email-account";
+import { User } from "../../../instances/auth/user";
 import { PasswordCypher } from "../../../ports/password-cypher.interface";
 import { SessionHandler } from "../../../ports/session-handler.interface";
-import { Translater } from "../../../ports/translater.interface";
-import { AccountsRepo } from "../../../repos/accounts.repo.interface";
-import { EmailLoginMessages } from "./email.login.messages";
+import { FetchEmailAccountRepo } from "../../../repos/accounts/fetch-email-account-repo.interface";
+import { FetchUserRepo } from "../../../repos/users/fetch-user.interface";
 
 export class EmailLogin {
 
+    private lang : string;
+
     constructor(
-        private accountsRepo : AccountsRepo,
+        private fetchEmailaccountRepo : FetchEmailAccountRepo,
         private passwordCypher : PasswordCypher,
-        private sessionHandler: SessionHandler,
-        private translater : Translater,
+        private sessionGenerator : SessionHandler,
+        private fetchUserRepo : FetchUserRepo
     ){}
 
-    /**
-     * checks credentials then generates a session
-     * @async
-     * @param {EmailLoginDto} loginData
-     * @param {String} lang 
-     */
-    async login(loginData : EmailLoginDto, lang : string) : Promise<SessionDto> {
-        await this.validateData(loginData, lang).catch(err => {throw err});
-        return this.sessionHandler.signSession( { email : loginData.email } );
+    login(lang : string, loginData : EmailLoginDto) : Promise<SessionDto>{
+        return new Promise<SessionDto>(async(resolve, reject) => {
+            this.lang = lang;
+            try {
+                let account : EmailAccount = await this.fetchAccount(loginData.email);
+                await this.checkPassword(loginData.password, account.password);
+                await this.checkVerification(account.isVerified);
+                resolve(await this.signSession(account));
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
-    private async validateData(loginData: EmailLoginDto, lang : string ) {
-        let account : any = await this.accountsRepo.getAccountByEmail(loginData.email).catch(async() => { throw await this.getInternatServerErrorException(lang) });
-        await this.checkIfUserExists(account, lang).catch( (exception : Exception) => {  throw exception.getException()});
-        await this.checkPasswords(loginData.password, account.password, lang).catch( (exception : Exception) => { throw exception.getException()});
-        await this.checkVerification(account, lang).catch( (exception : Exception) => { throw exception.getException()});
-    }
-
-    private async getInternatServerErrorException(lang : string){
-        let name = await this.translater.getTranslation(lang, EmailLoginMessages.DATABASE_ERROR_NAME)
-        let message = await this.translater.getTranslation(lang, EmailLoginMessages.DATABASE_ERROR_MESSAGE)
-        return new DatabaseException(name, message).getException();
-    }
-
-    private async checkIfUserExists(account, lang : string){
-        let name = await this.translater.getTranslation(lang, EmailLoginMessages.NOT_FOUND_NAME);
-        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.NOT_FOUND_MESSAGE);
+    private async fetchAccount(email : string) : Promise<EmailAccount>{
+        let account : EmailAccount;
+        account = await this.fetchEmailaccountRepo.fetchAccountByEmail(this.lang, email);
         if(!account)
-            throw new UserNotFoundException(name, message);
+            throw new AccountNotFoundException("", "");
+        return account;
     }
 
-    private async checkPasswords(password : string, hashedPassword : string, lang : string){
-        let name = await this.translater.getTranslation(lang, EmailLoginMessages.PASSWORD_MISSMATCH_NAME);
-        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.PASSWORD_MISSMATCH_MESSAGE);
-        if(!this.passwordCypher.verifyPassword(password, hashedPassword))
-            throw new PasswordMismatchException(name, message);
+    private async checkPassword(password : string, cypheredPassword : string){
+        if(!this.passwordCypher.verifyPassword(password, cypheredPassword))
+            throw new PasswordMismatchException("", "");
+        return;
     }
 
-    private async checkVerification(account : any, lang : string){
-        let name = await this.translater.getTranslation(lang, EmailLoginMessages.UNVERIFIED_NAME);
-        let message  = await this.translater.getTranslation(lang, EmailLoginMessages.UNVERIFIED_MESSAGE);
-        if(!account.verified)
-            throw new AccountUnverifiedException(name, message);
+    private async checkVerification(verified : boolean){
+        if(!verified)
+            throw new AccountUnverifiedException("", "");
+    }
+
+    private async signSession(account: EmailAccount) : Promise<SessionDto>{
+        let user : User = await this.fetchUser(account.email);
+        return this.sessionGenerator.signSession({
+            email : account.email,
+            name : user.name,
+            role : user.role
+        });
+    }
+
+    private async fetchUser(email : string): Promise<User>{
+        let user = await this.fetchUserRepo.fetchUserWithEmail(this.lang, email);
+        return user;
     }
 }

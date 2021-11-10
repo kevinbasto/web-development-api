@@ -6,7 +6,7 @@ import * as crypto from 'crypto';
 export class TokenGeneratorService implements TokenGenerator {
 
     generateToken() : string{
-        let token : string = crypto.createHash('md5').update(crypto.randomBytes(20)).digest('hex');
+        let token : string = crypto.createHash('sha512').update(crypto.randomBytes(20)).digest('hex');
         return token;
     }
 }

@@ -1,1 +1,3 @@
-export class EmailRecoverDto {}
+export class EmailRecoverDto {
+    email : string;
+}

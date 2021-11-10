@@ -1,81 +1,107 @@
 import { EmailRegisterDto } from "../../../dto/auth/email-register-dto";
-import { SystemMessageDto } from "../../../dto/system-message.dto";
-import { DatabaseException } from "../../../exceptions/database.exception";
-import { Exception } from "../../../exceptions/exception.interface";
-import { UserDuplicatedException } from "../../../exceptions/user-duplicated.exception";
-import { CredentialsHandler } from "../../../ports/credentials-handler.interface";
-import { EmailSender } from "../../../ports/email-sender.interface";
+import { PasswordMismatchException } from "../../../exceptions/account/password-mismatch.exception";
+import { AccountDuplicatedException } from "../../../exceptions/user/account-duplicated.exception";
+import { EmailAccount } from "../../../instances/auth/email-account";
+import { User } from "../../../instances/auth/user";
 import { PasswordCypher } from "../../../ports/password-cypher.interface";
-import { TemplateLoader } from "../../../ports/template-loader.interface";
 import { TokenGenerator } from "../../../ports/token-generator.interface";
-import { Translater } from "../../../ports/translater.interface";
-import { AccountsRepo } from "../../../repos/accounts.repo.interface";
-import { UsersRepo } from "../../../repos/users.repo.interface";
-import { EmailRegisterMessage } from "./email.register.messages";
-import { SendVerificationEmail } from "./verification-email/send-verification-email";
-
+import { UuidGenerator } from "../../../ports/uuid-generator.interface";
+import { CreateEmailAccountRepo } from "../../../repos/accounts/create-email-account-repo.interface";
+import { FetchEmailAccountRepo } from "../../../repos/accounts/fetch-email-account-repo.interface";
+import { CreateUserRepo } from "../../../repos/users/create-user.interface";
 
 export class EmailRegister {
+    
+    private lang : string
+
     constructor(
-        private accountsRepo : AccountsRepo,
-        private usersRepo : UsersRepo,
-        private tokenGenerator : TokenGenerator,
-        private translater : Translater,
+        private FetchEmailAccountRepo : FetchEmailAccountRepo,
         private passwordCypher : PasswordCypher,
-        private templateLoader : TemplateLoader,
-        private emailSender : EmailSender,
-        private credentialsHandler : CredentialsHandler
+        private uuidGenerator : UuidGenerator,
+        private tokenGenerator : TokenGenerator,
+        private createEmailAccountRepo : CreateEmailAccountRepo,
+        private createUserRepo : CreateUserRepo
     ){}
 
-    /**
-     * will check if the email exists and if it's not then create the user and account and links them
-     * @param registerData 
-     * @param lang 
-     * @returns {SystemMessageDto}
-     */
-    async register( registerData : EmailRegisterDto, lang : string ) : Promise<SystemMessageDto> {
-        await this.validateAccount(registerData.email, lang).catch(error => { throw error });
-        let token = await this.createAccountAndUser(registerData, lang).catch(error => { throw error });
-        await this.sendVerificationEmail.sendEmail(token, registerData.email, lang).catch(error => { throw error });
-        return await this.getSuccessMessage(lang);
-    }
-
-    private async validateAccount( email : string, lang : string ){
-        let account = await this.accountsRepo.getAccountByEmail(email).catch(async() => { throw await this.getDatabaseErrorMessage(lang) });
-        await this.validateAccountExists(account, lang).catch((error : Exception) => { throw error });
-    }
-
-    private async getDatabaseErrorMessage(lang : string){
-        let name : string = await this.translater.getTranslation(lang, EmailRegisterMessage.DATABASE_EXCEPTION_NAME);
-        let message : string = await this.translater.getTranslation(lang, EmailRegisterMessage.DATABASE_EXCEPTION_MESSAGE);
-        return new DatabaseException(name, message).getException();
-    }
-
-    private async validateAccountExists(account : any, lang : string){
-        let name : string = await this.translater.getTranslation(lang, EmailRegisterMessage.ACCOUNT_DUPLICATED_NAME);
-        let message : string = await this.translater.getTranslation(lang, EmailRegisterMessage.ACCOUNT_DUPLICATED_MESSAGE);
-        if(account)
-            throw new UserDuplicatedException( name, message ).getException();
-    }
-
-    private async createAccountAndUser(registerData : EmailRegisterDto, lang : string) : Promise<string>{
-        let token = this.tokenGenerator.generateToken();
-        let password = await this.passwordCypher.signPassword(registerData.password);
-        await this.accountsRepo.createEmailAccount( registerData.email, password, token).catch(async() => { throw await this.getDatabaseErrorMessage(lang)});
-        await this.usersRepo.createUserWithEmailAccount(registerData.username, registerData.email).catch(async() => { throw await this.getDatabaseErrorMessage(lang)});
-        return token;
-    }
-
-    private get sendVerificationEmail(){
-        return new SendVerificationEmail(this.templateLoader, this.emailSender, this.translater, this.credentialsHandler);
-    }    
-
-    private async getSuccessMessage(lang : string) : Promise<SystemMessageDto>{
-        let name : string = await this.translater.getTranslation(lang, EmailRegisterMessage.REGISTER_SUCCESS_NAME);
-        let message : string = await this.translater.getTranslation(lang, EmailRegisterMessage.REGISTER_SUCCESS_MESSAGE);
-        return {
-            name : name,
-            message : message
+    async registerEmailAccount(lang : string, registerData : EmailRegisterDto) : Promise<string>{
+        this.lang = lang;
+        let account : EmailAccount;
+        let user : User;
+        try {
+            await this.checkIfEmailAccountIsNotDuplicated(registerData.email);
+            this.checkPasswordsMatch(registerData.password, registerData.verifyPassword);
+            delete registerData.verifyPassword;
+            registerData.password = await this.encryptPassword(registerData.password);
+            account = this.createAccount(registerData);
+            await this.storeAccount(account);
+            user = this.createUser(registerData);
+            await this.storeUser(user, account.accountId);
+        } catch (error) {
+            throw error;
         }
+        return account.verificationToken;
+    }
+
+    private async checkIfEmailAccountIsNotDuplicated(email : string) : Promise<boolean>{
+        let account : EmailAccount = await this.FetchEmailAccountRepo.fetchAccountByEmail(this.lang, email);
+        if(!account)
+            return true;
+        else
+            throw new AccountDuplicatedException("", "");
+    }
+
+    private checkPasswordsMatch(password : string, verifyPassword : string){
+        if(password != verifyPassword)
+            throw new PasswordMismatchException("", "")
+    }
+
+    private async encryptPassword(password : string) : Promise<string>{
+        let encrypterPassword : string;
+        try {
+            encrypterPassword = await this.passwordCypher.signPassword(password);
+            return encrypterPassword;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    private createAccount(registerData : EmailRegisterDto) : EmailAccount{
+        let account : EmailAccount = {
+            email : registerData.email,
+            accountId : "",
+            password : registerData.password,
+            verificationToken: this.tokenGenerator.generateToken(),
+            isVerified : false,
+            registerDate: Date.now()
+        }
+        account.accountId = this.uuidGenerator.GenerateUuid(JSON.stringify(account));
+        return account;
+    }
+
+    private createUser(registerData : EmailRegisterDto) : User{
+        let user : User = {
+            name: registerData.username,
+            userId : ""
+        }
+        user.userId = this.uuidGenerator.GenerateUuid(JSON.stringify(user));
+        return user;
+    }
+
+    private async storeAccount(account: EmailAccount) : Promise<void>{
+        try {
+            await this.createEmailAccountRepo.createEmailAccount(this.lang, account)
+        } catch (error) {
+            throw error
+        }
+        return;
+    }
+
+    private async storeUser(user : User, accountId : string) : Promise<void>{
+        try {
+            this.createUserRepo.createUser(this.lang, user, accountId);
+        } catch (error) {
+            throw error
+        }
+        return;
     }
 }

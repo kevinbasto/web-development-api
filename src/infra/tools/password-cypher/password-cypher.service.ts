@@ -8,11 +8,15 @@ export class PasswordCypherService implements PasswordCypher {
     constructor() {}
 
     async signPassword(password: string) : Promise<string> {
-        const saltRounds = 10;
-        let salt;
-        await bcrypt.genSalt(saltRounds).then(genSalt => salt = genSalt).catch(error => {throw error});
-        await bcrypt.hash(password, salt).then(hash => password = hash).catch(error => {throw error});
-        return password;
+        try {
+            const saltRounds = 10;
+            let salt;
+            await bcrypt.genSalt(saltRounds).then(genSalt => salt = genSalt);
+            await bcrypt.hash(password, salt).then(hash => password = hash);
+            return password;
+        } catch (error) {
+            throw error;
+        }
     }
 
     verifyPassword(password : string, hashedPassword : string) : boolean {

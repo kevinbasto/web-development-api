@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { EmailSender } from '../../../core/ports/email-sender.interface';
 import * as sendgrid from '@sendgrid/mail';
 import * as dotenv from 'dotenv';
-import { EmailDto } from '../../../core/dto/email-dto';
+import { EmailDto } from '../../../core/dto/generic/email-dto';
 
 @Injectable()
 export class EmailSenderService implements EmailSender{
@@ -15,7 +15,6 @@ export class EmailSenderService implements EmailSender{
     async sendEmail(email : EmailDto) : Promise<any>{
         await sendgrid.setApiKey(this.apikey);
         await sendgrid.send(email)
-        .then(res => { })
         .catch(error => {
             throw error;
         })
