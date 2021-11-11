@@ -11,7 +11,7 @@ export class VerifyController {
     @Post(':token')
     verifyEmailAccount(@Param('token') token : string, @Headers('Accept-Language') lang : string) : Promise<any>{
         return new Promise<any>((resolve, reject) => {
-            this.verifyService.verifyEmailUser(token ,lang)
+            this.verifyService.verifyEmailUser(lang, token)
             .then(res => resolve(res))
             .catch(error => reject(error));
         })

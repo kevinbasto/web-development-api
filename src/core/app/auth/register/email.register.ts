@@ -89,6 +89,7 @@ export class EmailRegister {
 
     private async storeAccount(account: EmailAccount) : Promise<void>{
         try {
+            console.log(account);
             await this.createEmailAccountRepo.createEmailAccount(this.lang, account)
         } catch (error) {
             throw error
