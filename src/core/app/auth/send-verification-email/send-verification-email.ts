@@ -37,7 +37,7 @@ export class SendVerificationEmail extends EmailSend{
         return {
             greetings: greetings,
             message : message,
-            verificationUrl : `${clientUrl}/verify/${token}`
+            verificationUrl : `${clientUrl}/auth/verify/${token}`
         }
     }
 
