@@ -36,7 +36,7 @@ export class SendRecoverEmail extends EmailSend{
         return {
             greetings: greetings,
             message : message,
-            verificationUrl : `${clientUrl}/recover/${token}`
+            verificationUrl : `${clientUrl}/auth/change/${token}`
         }
     }
 
