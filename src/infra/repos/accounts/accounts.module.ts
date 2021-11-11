@@ -24,6 +24,7 @@ const services : Provider<any>[] = [
     imports: [
         ToolsModule
     ],
-    providers: services
+    providers: services,
+    exports: services
 })
 export class AccountsModule {}
