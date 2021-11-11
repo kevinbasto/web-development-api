@@ -20,7 +20,6 @@ describe('Recover', () => {
     let lang = "en";
     try {
       let token : string = await recover.GenerateRecoverToken(lang, email);
-      console.log(token);
       expect(token).toBeDefined();
     } catch (error) {
       expect(error).toBeUndefined();

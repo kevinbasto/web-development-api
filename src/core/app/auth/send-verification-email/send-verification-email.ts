@@ -34,6 +34,7 @@ export class SendVerificationEmail extends EmailSend{
         let greetings = await this.translater.getTranslation(lang, "verification.GREETINGS");
         let message = await this.translater.getTranslation(lang, "verification.MESSAGE");
         let clientUrl = this.credentialsManager.loadCredential("CLIENT_URL");
+        
         return {
             greetings: greetings,
             message : message,
