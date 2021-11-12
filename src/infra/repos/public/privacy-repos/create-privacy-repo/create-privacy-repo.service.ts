@@ -37,11 +37,12 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
     }
 
     private async countPrivacyPolicies(lang : string) : Promise<number>{
-        let query : string = "MATCH(privacy:privacy) RETURN COUNT(account)";
+        let query : string = "MATCH(privacy:privacy) RETURN COUNT(privacy)";
         let count : number;
         try {
             let result = (await this.executeReadModeQuery(lang, query)).records[0].toObject();
-            count = result['count(privacy)'].low + result['count(privacy)'].high;
+            console.log(result);
+            count = result['COUNT(privacy)'].low + result['COUNT(privacy)'].high;
         } catch (error) {
             throw error;
         }

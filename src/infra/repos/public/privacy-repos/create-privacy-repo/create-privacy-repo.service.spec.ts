@@ -22,7 +22,7 @@ describe('CreatePrivacyRepoService', () => {
   it('should create a privacy terms publication', async() => {
     let terms : PrivacyDto = {
       title: "Aviso de privacidad",
-      date : "november 5, 2021",
+      date : "dec 31, 2021",
       content: [
         "lorem ipsum dolor sit amet consectetur adipicising elit",
         "eliat von ipsum corel sau",
