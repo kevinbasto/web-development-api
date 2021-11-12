@@ -17,11 +17,9 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
     }
 
     async createPrivacyTerms( lang : string, privacy : PrivacyDto  ) : Promise<void>{
-        let query : string = "CREATE(privacy:privacy:current) set privacy = $privacy";
-        let params = { privacy : privacy};
         try {
             await this.setPrivacyConstratints(lang);
-            await this.executeWriteModeQuery(lang, query, params);
+            await this.storeNewPrivacyNoticeEdition(lang, privacy)
             return;
         } catch (error) {
             throw error
@@ -50,7 +48,7 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
         return count;
     }
 
-    private async setPrivacyRestrictions(lang) : Promise<void>{
+    private async setPrivacyRestrictions(lang : string) : Promise<void>{
         let query : string = "CREATE CONSTRAINT ON (privacy:privacy) ASSERT privacy.privacyId IS UNIQUE;"
         try {
             await this.executeWriteModeQuery(lang, query);
@@ -58,5 +56,17 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
             throw error;
         }
         return;
+    }
+
+    private async storeNewPrivacyNoticeEdition(lang : string, privacy : PrivacyDto) : Promise<void>{
+        let query : string = `MATCH(privacy:privacy:current) REMOVE privacy:current 
+        CREATE(newPrivacy:privacy:current) SET newPrivacy = $privacy 
+        CREATE(newPrivacy)-[:succedes]->(privacy)`;
+        let params = { privacy : privacy};
+        try {
+            await this.executeWriteModeQuery(lang, query, params);
+        } catch (error) {
+            throw error;
+        }
     }
 }
