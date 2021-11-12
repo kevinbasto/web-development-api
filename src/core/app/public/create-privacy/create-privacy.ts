@@ -25,12 +25,12 @@ export class CreatePrivacy {
         }
     }
 
-    setPrivacyId( privacy : PrivacyDto){
+    private setPrivacyId( privacy : PrivacyDto){
         privacy.privacyTermsId = this.uuidGenerator.GenerateUuid(privacy);
         return privacy;
     }
 
-    async storePrivacyTerms( privacy : PrivacyDto) : Promise<void> {
+    private async storePrivacyTerms( privacy : PrivacyDto) : Promise<void> {
         try {
             await this.createPrivacyRepo.createPrivacyTerms(this.lang, privacy);
             return;
@@ -39,7 +39,7 @@ export class CreatePrivacy {
         }
     }
 
-    async getSuccessMessage() : Promise<SystemMessage>{
+    private async getSuccessMessage() : Promise<SystemMessage>{
         let name : string = await this.translater.getTranslation(this.lang, "privacy.SUCCESS_NAME");
         let message :  string = await this.translater.getTranslation(this.lang, "privacy.SUCCESS_MESSAGE");
         return {
