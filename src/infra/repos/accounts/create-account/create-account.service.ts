@@ -35,7 +35,7 @@ export class CreateAccountService extends DatabaseConnection implements CreateEm
             if(!accounts)
                 await this.setAccountsRestrictions(lang);
         } catch (error) {
-            
+            throw error;
         }
     }
 
