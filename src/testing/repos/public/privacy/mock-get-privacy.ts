@@ -13,7 +13,20 @@ export class MockGetPrivacy implements GetPrivacyRepo{
                 "et quam ipsum anaero titilantus"
             ]
         };
-
         return privacy
+    }
+
+    async getPrivacyById(lang : string, privacyId : string) : Promise<PrivacyDto> {
+        let privacy : PrivacyDto = {
+            title : "Uso de datos",
+            date: "jan 1, 2022",
+            content: [
+                "lorem ipsum dolor sit amet",
+                "consectetur adipicising elit",
+                "et quam ipsum anaero titilantus"
+            ]
+        };
+        if(privacyId = "test")
+            return privacy;
     }
 }

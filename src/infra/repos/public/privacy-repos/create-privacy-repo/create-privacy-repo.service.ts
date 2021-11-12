@@ -41,7 +41,6 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
         let count : number;
         try {
             let result = (await this.executeReadModeQuery(lang, query)).records[0].toObject();
-            console.log(result);
             count = result['COUNT(privacy)'].low + result['COUNT(privacy)'].high;
         } catch (error) {
             throw error;

@@ -11,12 +11,20 @@ export class GetPrivacyService {
         @Inject(GET_PRIVACY_REPO_TOKEN) private getPrivacyRepo : GetPrivacyRepo
     ){}
 
-    public getPrivacyPolicies( lang : string) : Promise<PrivacyDto>{
+    getPrivacyPolicies( lang : string) : Promise<PrivacyDto>{
         return new Promise<PrivacyDto>((resolve, reject) => {
             this.privacy.getCurrentPrivacy(lang)
             .then(res => resolve(res))
             .catch(error => reject(error));
         })
+    }
+
+    FetchPrivacyPolicty( lang : string, privacyId : string ) : Promise<PrivacyDto>{
+        return new Promise<PrivacyDto>((resolve, reject) => {
+            this.privacy.getPrivacyPolicyById(lang, privacyId)
+            .then(res => resolve(res))
+            .catch(error => reject(error));
+        });
     }
 
     get privacy(){

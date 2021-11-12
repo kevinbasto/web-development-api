@@ -23,7 +23,6 @@ describe('GetPrivacyRepoService', () => {
     let lang : string = "en";
     try {
       let privacyPolicies : PrivacyDto =await service.getCurrentTerms(lang);
-      console.log(privacyPolicies);
       expect(privacyPolicies).toBeDefined();
     } catch (error) {
       expect(error).toBeUndefined();
