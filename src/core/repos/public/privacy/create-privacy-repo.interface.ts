@@ -1,5 +1,5 @@
 import { PrivacyDto } from "../../../dto/public/privacy";
 
 export interface CreatePrivacyRepo {
-    createPrivacyTerms( terms : PrivacyDto  ) : Promise<void>;
+    createPrivacyTerms( lang : string, terms : PrivacyDto  ) : Promise<void>;
 }
