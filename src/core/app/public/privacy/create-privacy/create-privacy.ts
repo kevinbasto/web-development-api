@@ -1,8 +1,8 @@
-import { SystemMessage } from "../../../dto/generic/system-message.dto";
-import { PrivacyDto } from "../../../dto/public/privacy";
-import { Translater } from "../../../ports/translater.interface";
-import { UuidGenerator } from "../../../ports/uuid-generator.interface";
-import { CreatePrivacyRepo } from "../../../repos/public/privacy/create-privacy-repo.interface";
+import { SystemMessage } from "../../../../dto/generic/system-message.dto";
+import { PrivacyDto } from "../../../../dto/public/privacy";
+import { Translater } from "../../../../ports/translater.interface";
+import { UuidGenerator } from "../../../../ports/uuid-generator.interface";
+import { CreatePrivacyRepo } from "../../../../repos/public/privacy/create-privacy-repo.interface";
 
 export class CreatePrivacy {
 

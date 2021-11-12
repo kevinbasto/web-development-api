@@ -12,7 +12,8 @@ import { PublicReposModule } from './public/public-repos.module';
   ],
   exports : [
     AccountsModule,
-    UsersModule
+    UsersModule,
+    PublicReposModule
   ],
 })
 export class ReposModule {}

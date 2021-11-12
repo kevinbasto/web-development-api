@@ -15,7 +15,9 @@ export class CreatePrivacyController {
     @Post('')
     public CreateNovel(@Body() privacyBody : PrivacyDto, @Headers('Accept-Language') lang : string ) : Promise<SystemMessage> {
         return new Promise<SystemMessage>((resolve, reject) => {
-            
+            this.createPrivacyService.publishPrivacy(lang, privacyBody)
+            .then(res => resolve(res))
+            .catch(error => reject(error));
         })
     }
 }
