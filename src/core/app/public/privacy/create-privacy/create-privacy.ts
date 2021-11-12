@@ -25,7 +25,7 @@ export class CreatePrivacy {
         }
     }
 
-    private setPrivacyId( privacy : PrivacyDto){
+    private setPrivacyId( privacy : PrivacyDto) : PrivacyDto{
         privacy.privacyTermsId = this.uuidGenerator.GenerateUuid(privacy);
         return privacy;
     }
