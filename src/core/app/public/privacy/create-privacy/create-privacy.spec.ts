@@ -1,7 +1,7 @@
-import { UuidGeneratorService } from '../../../../infra/tools/uuid-generator/uuid-generator.service';
-import { MockCreatePrivacy } from '../../../../testing/repos/public/privacy/mock-create-privacy';
-import { MockTranslater } from '../../../../testing/tools/mock-translater';
-import { PrivacyDto } from '../../../dto/public/privacy';
+import { UuidGeneratorService } from '../../../../../infra/tools/uuid-generator/uuid-generator.service';
+import { MockCreatePrivacy } from '../../../../../testing/repos/public/privacy/mock-create-privacy';
+import { MockTranslater } from '../../../../../testing/tools/mock-translater';
+import { PrivacyDto } from '../../../../dto/public/privacy';
 import { CreatePrivacy } from './create-privacy';
 
 const uuidGenerator = new UuidGeneratorService();
