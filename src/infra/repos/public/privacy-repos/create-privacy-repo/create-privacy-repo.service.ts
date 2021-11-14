@@ -18,19 +18,22 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
 
     async createPrivacyTerms( lang : string, privacy : PrivacyDto  ) : Promise<void>{
         try {
-            await this.setPrivacyConstratints(lang);
-            await this.storeNewPrivacyNoticeEdition(lang, privacy)
-            return;
+            let policiesCount : number | void = await this.setPrivacyConstratintsAndFetchCount(lang);
+            if(policiesCount)
+                await this.storeNewPrivacyNoticeEdition(lang, privacy);
+            else
+                await this.storeFirstPoliciesVersion(lang, privacy);
         } catch (error) {
             throw error
         }
     }
 
-    private async setPrivacyConstratints( lang : string){
+    private async setPrivacyConstratintsAndFetchCount( lang : string) : Promise<number | void>{
         try {
             let policies : number = await this.countPrivacyPolicies(lang);
             if(!policies)
                 await this.setPrivacyRestrictions(lang);
+            return policies;
         } catch (error) {
             throw error;
         }
@@ -55,7 +58,6 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
         } catch (error) {
             throw error;
         }
-        return;
     }
 
     private async storeNewPrivacyNoticeEdition(lang : string, privacy : PrivacyDto) : Promise<void>{
@@ -63,6 +65,18 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
         CREATE(newPrivacy:privacy:current) SET newPrivacy = $privacy 
         CREATE(newPrivacy)-[:succedes]->(privacy)`;
         let params = { privacy : privacy};
+        try {
+            await this.executeWriteModeQuery(lang, query, params)
+            .then( res => console.log(res.summary))
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    private async storeFirstPoliciesVersion(lang : string, privacy : PrivacyDto){
+        let query : string = "CREATE(privacy:privacy:current) SET privacy = $privacy";
+        let params = { privacy : privacy}
         try {
             await this.executeWriteModeQuery(lang, query, params);
         } catch (error) {
