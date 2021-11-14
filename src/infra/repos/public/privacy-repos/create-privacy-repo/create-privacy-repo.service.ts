@@ -67,9 +67,7 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
         let params = { privacy : privacy};
         try {
             await this.executeWriteModeQuery(lang, query, params)
-            .then( res => console.log(res.summary))
         } catch (error) {
-            console.log(error);
             throw error;
         }
     }
