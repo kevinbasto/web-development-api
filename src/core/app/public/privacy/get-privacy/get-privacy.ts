@@ -19,7 +19,7 @@ export class GetPrivacy {
 
     async getPrivacyPolicyById(lang : string, privacyId : string) : Promise<PrivacyDto>{
         try {
-            let privacyPolicies : PrivacyDto = await this.getPrivacyRepo.getCurrentTerms(lang);
+            let privacyPolicies : PrivacyDto = await this.getPrivacyRepo.getPrivacyById(lang, privacyId);
             if(!privacyPolicies)
                 throw new PrivacyNoticeNotFoundException("", "");
             return privacyPolicies;

@@ -52,7 +52,7 @@ export class CreatePrivacyRepoService extends DatabaseConnection implements Crea
     }
 
     private async setPrivacyRestrictions(lang : string) : Promise<void>{
-        let query : string = "CREATE CONSTRAINT ON (privacy:privacy) ASSERT privacy.privacyId IS UNIQUE;"
+        let query : string = "CREATE CONSTRAINT ON (privacy:privacy) ASSERT privacy.privacyTermsId IS UNIQUE;"
         try {
             await this.executeWriteModeQuery(lang, query);
         } catch (error) {

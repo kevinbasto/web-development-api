@@ -30,7 +30,7 @@ export class GetPrivacyRepoService extends DatabaseConnection implements GetPriv
     }
 
     async getPrivacyById(lang : string, privacyId : string) : Promise<PrivacyDto>{
-        let query : string = "MATCH(privacy:privacy) WHERE privacy.privacyId = $privacyId RETURN privacy";
+        let query : string = "MATCH(privacy:privacy) WHERE privacy.privacyTermsId = $privacyId RETURN privacy";
         let params : any = { privacyId : privacyId };
         let privacyPolicies : PrivacyDto
         try {
