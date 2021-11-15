@@ -19,7 +19,7 @@ describe('EditPrivacyRepoService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should edit a post successfully', async () => {
+  /*it('should edit a post successfully', async () => {
     try {
       let privacy : PrivacyDto = {
         title : "actualización del aviso de privacidad",
@@ -35,6 +35,6 @@ describe('EditPrivacyRepoService', () => {
     } catch (error) {
       expect(error).toBeUndefined();
     }
-  })
+  })*/
 
 });

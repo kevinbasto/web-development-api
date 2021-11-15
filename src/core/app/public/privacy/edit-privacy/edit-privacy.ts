@@ -21,8 +21,10 @@ export class EditPrivacy {
             let currentTerms : PrivacyDto = await this.fetchCurrentPrivacyTerms(privacyId);
             privacy = {...currentTerms, ...privacy};
             await this.updatePrivacyTerms(privacyId, privacy);
+            console.log("object");
             return await this.getSuccessMessage();
         } catch (error) {
+            console.log(error);
             throw error;
         }
     }
@@ -30,8 +32,9 @@ export class EditPrivacy {
     private async fetchCurrentPrivacyTerms(privacyId : string) : Promise<PrivacyDto>{
         try {
             let currentTerms : PrivacyDto = await this.getPrivacyRepo.getPrivacyById(this.lang, privacyId)
+            console.log(privacyId);
             if(!currentTerms)
-                throw new PrivacyNoticeNotFoundException("", "");
+                throw new PrivacyNoticeNotFoundException("not found", "the privacy notice edition you searched has not been founded");
             return currentTerms;
         } catch (error) {
             throw error;
