@@ -24,7 +24,8 @@ export class MockGetPrivacy implements GetPrivacyRepo{
                 "lorem ipsum dolor sit amet",
                 "consectetur adipicising elit",
                 "et quam ipsum anaero titilantus"
-            ]
+            ],
+            privacyTermsId: "test"
         };
         if(privacyId = "test")
             return privacy;
