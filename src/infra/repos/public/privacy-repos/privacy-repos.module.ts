@@ -1,9 +1,10 @@
 import { Module, Provider } from '@nestjs/common';
 import { ToolsModule } from '../../../tools/tools.module';
 import { CreatePrivacyRepoService } from './create-privacy-repo/create-privacy-repo.service';
-import { CREATE_PRIVACY_REPO_TOKEN, GET_PRIVACY_REPO_TOKEN, UPDATE_PRIVACY_REPO_TOKEN } from './privacy-repos-tokens';
+import { CREATE_PRIVACY_REPO_TOKEN, DELETE_PRIVACY_REPO_TOKEN, GET_PRIVACY_REPO_TOKEN, UPDATE_PRIVACY_REPO_TOKEN } from './privacy-repos-tokens';
 import { GetPrivacyRepoService } from './get-privacy-repo/get-privacy-repo.service';
 import { EditPrivacyRepoService } from './edit-privacy-repo/edit-privacy-repo.service';
+import { DeletePrivacyRepoService } from './delete-privacy-repo/delete-privacy-repo.service';
 
 const services : Provider<any>[] = [
     {
@@ -17,6 +18,10 @@ const services : Provider<any>[] = [
     {
         provide: UPDATE_PRIVACY_REPO_TOKEN,
         useClass: EditPrivacyRepoService
+    },
+    {
+        provide: DELETE_PRIVACY_REPO_TOKEN,
+        useClass: DeletePrivacyRepoService
     }
 ]
 
