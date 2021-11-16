@@ -46,7 +46,11 @@ export class DeletePrivacyRepoService extends DatabaseConnection implements Dele
     }
 
     private async setNeighborToCurrent(privacyId : string) : Promise<void>{
-        
+        if(await this.countPrivacy() <= 1)
+            throw new UnauthorizedException({ 
+                name : "operation unauthorized", 
+                message :  "you must have at least one privacy notice for legal reasons"
+            });
         let query : string = "MATCH(privacy:privacy:current)-[:succedes]->(olderPrivacy:privacy) DETACH DELETE privacy SET olderPrivacy:current";
         let params = { privacyId : privacyId };
         try {
