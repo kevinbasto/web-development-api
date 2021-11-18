@@ -8,7 +8,7 @@ import * as path from 'path'
 export class TemplateLoaderService implements TemplateLoader{
 
     loadTemplate(templateName : string) : string{
-        let template : string = fs.readFileSync(path.join(__dirname, `../../../assets/templates/${templateName}.hbs`), 'utf-8');
+        let template : string = fs.readFileSync(path.join(__dirname, `../../../../assets/templates/${templateName}.hbs`), 'utf-8');
         return template;
     }
 

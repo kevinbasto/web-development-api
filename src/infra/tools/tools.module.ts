@@ -60,7 +60,7 @@ const services : Provider<any>[] = [
       fallbackLanguage: 'en',
       parser: I18nJsonParser,
       parserOptions: {
-          path: path.join(__dirname, '../../assets/i18n/'),
+          path: path.join(__dirname, '../../../assets/i18n/'),
           watch: true
       },
   }),
